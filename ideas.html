@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ideas · Kidpreneur — CodeAGS</title>
+<style>
+  :root{
+    --bg-900:#0b0b0c;--bg-800:#0f1113;
+    --border:rgba(255,255,255,0.05);
+    --accent:#0a84ff;--accent2:#64d2ff;
+    --muted:#8e8e93;--text:#efeff4;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:-apple-system,"SF Pro Display","SF Pro Text";background:linear-gradient(180deg,var(--bg-900),var(--bg-800));color:var(--text);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .menubar{position:fixed;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));border-bottom:1px solid var(--border);backdrop-filter:blur(14px) saturate(140%);z-index:1100}
+  .menubar .left{display:flex;align-items:center;gap:12px}
+  .logo{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-weight:700}
+  .brand .title{font-weight:700;font-size:14px}
+  .brand .sub{font-size:11px;color:var(--muted)}
+  .menubar .center{color:var(--muted);font-size:13px}
+  .menubar .right{color:var(--muted);font-size:13px}
+  .desktop{padding:64px 32px 120px;margin-top:44px;display:flex;justify-content:center}
+  .app{width:1000px;max-width:100%;border-radius:20px;background:linear-gradient(180deg,rgba(20,20,21,.7),rgba(12,12,13,.7));border:1px solid var(--border);backdrop-filter:blur(20px) saturate(160%);box-shadow:0 18px 48px rgba(2,6,23,.6);animation:fadeIn 600ms cubic-bezier(.2,.9,.25,1);overflow:hidden}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  .titlebar{height:62px;display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid var(--border)}
+  .traffic{display:flex;gap:8px}
+  .t{width:13px;height:13px;border-radius:50%}
+  .red{background:#ff5f56}.yellow{background:#ffbd2e}.green{background:#28c840}
+  .win-title{flex:1;text-align:center;font-weight:600}
+  .ideas-hero{padding:50px 40px;text-align:center}
+  .ideas-hero h1{font-size:46px;margin:0;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientMove 6s ease infinite;background-size:200% auto}
+  .ideas-hero p{margin-top:12px;font-size:18px;color:var(--muted)}
+  @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .idea-form{padding:0 40px 40px;display:flex;flex-direction:column;gap:16px}
+  .idea-form input,.idea-form textarea,.idea-form select,.idea-form button{
+    border:none;outline:none;padding:14px 16px;border-radius:var(--radius);
+    font-size:15px;font-family:inherit;
+  }
+  .idea-form input,.idea-form textarea,.idea-form select{
+    background:rgba(255,255,255,.05);color:var(--text);
+    border:1px solid rgba(255,255,255,.08);
+    resize:none;
+  }
+  .idea-form button{
+    background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;
+    font-weight:600;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .idea-form button:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(10,132,255,.5)}
+  .ideas-feed{display:flex;flex-direction:column;gap:24px;padding:0 40px 40px}
+  .card{padding:22px;border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.05);box-shadow:0 12px 30px rgba(2,6,23,.45);opacity:0;transform:translateY(20px) scale(.97);transition:all .6s cubic-bezier(.2,.9,.25,1)}
+  .card.show{opacity:1;transform:none}
+  .card h3{margin-top:0;font-size:20px;color:var(--accent)}
+  .card p{margin:6px 0 0;font-size:15px;color:var(--text);line-height:1.5}
+  .app-footer{padding:16px 40px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+  .dock{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;padding:10px 18px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));border:1px solid var(--border);box-shadow:0 28px 80px rgba(2,6,23,.6);display:flex;gap:12px;z-index:1200;backdrop-filter:blur(20px)}
+  .dock .dock-icon{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;transition:transform 140ms cubic-bezier(.2,.9,.2,1)}
+  .dock .dock-icon img{width:40px;height:40px}
+  #messageBox {
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    display: none;
+    animation: fadeIn 0.5s ease-out;
+  }
+  #messageBox.success {
+    background-color: #28c840;
+    color: #fff;
+  }
+  #messageBox.error {
+    background-color: #ff5f56;
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+  <div class="menubar">
+    <div class="left"><div class="logo"><img src="doctoral-hat-8619555.svg"></div><div class="brand"><div class="title">CodeAGS</div><div class="sub">Kidpreneur</div></div></div>
+    <div class="right" id="menubar-clock">--:--</div>
+  </div>
+  <div class="desktop">
+    <div class="app">
+      <div class="titlebar">
+        <div class="traffic"><div class="t red"></div><div class="t yellow"></div><div class="t green"></div></div>
+      </div>
+      <div class="ideas-hero">
+        <h1>Share Your Idea</h1>
+        <p>Have an idea for a business, app, or social project? Submit it here.</p>
+      </div>
+      <div id="messageBox"></div>
+      <form class="idea-form" id="ideaForm" enctype="multipart/form-data">
+        <input type="text" id="fullName" name="fullName" placeholder="Full name" required />
+        <input type="text" id="contact" name="contact" placeholder="Phone / Email" required />
+        <input type="text" id="city" name="city" placeholder="City" required />
+        <select name="country" required>
+          <option value="">— Select country —</option>
+          <option>Australia</option><option>Bangladesh</option><option>Belgium</option>
+          <option>Brazil</option><option>Canada</option><option>China</option>
+          <option>Egypt</option><option>Ethiopia</option><option>France</option>
+          <option>Germany</option><option>India</option><option>Indonesia</option>
+          <option>Japan</option><option>Kenya</option><option>Malaysia</option>
+          <option>Myanmar</option><option>Nepal</option><option>Nigeria</option>
+          <option>Pakistan</option><option>Philippines</option><option>Russia</option>
+          <option>Singapore</option><option>South Africa</option><option>South Korea</option>
+          <option>Sri Lanka</option><option>Thailand</option><option>Turkey</option>
+          <option>UAE</option><option>UK</option><option>USA</option><option>Vietnam</option>
+        </select>
+        <select name="grade" required>
+          <option value="">— Select grade —</option>
+          <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+        </select>
+        <select name="field" required>
+          <option value="">— Select field —</option>
+          <option>Technology</option><option>Science</option><option>Engineering</option>
+          <option>Mathematics</option><option>Healthcare</option><option>Environment</option>
+          <option>Social Impact</option><option>Arts & Design</option><option>Business & Startups</option>
+          <option>Education</option><option>Agriculture</option><option>Media & Communication</option>
+          <option>Sports</option><option>Space & Aeronautics</option><option>Other</option>
+        </select>
+        <input type="text" id="ideaTitle" name="ideaTitle" placeholder="Idea title" required />
+        <textarea id="ideaDesc" name="ideaDesc" rows="4" placeholder="Describe the idea in ~200 words" required></textarea>
+        <!-- file is now REQUIRED and allows multiple -->
+        <input type="file" id="attachment" name="attachment" multiple required />
+        <button type="submit">Submit Idea</button>
+      </form>
+      <section class="ideas-feed" id="ideasFeed"></section>
+      <div class="app-footer">
+        <div>© 2025 CodeAGS · Kidpreneur</div>
+      </div>
+    </div>
+  </div>
+  <div class="dock" id="dock">
+    <div class="dock-icon" data-link="explore.html" title="Programs"><img src="conversation-8957426.svg"></div>
+    <div class="dock-icon" data-link="gallery.html" title="Gallery"><img src="book-9368637.svg"></div>
+    <div class="dock-icon" data-link="about.html" title="About"><img src="faq-8934796.svg"></div>
+    <div class="dock-icon" data-link="index.html" title="Home"><img src="house-1110868.svg"></div>
+    <div class="dock-icon" data-link="inspiration.html"><img src="ribbon-9256449.svg"></div>
+  </div>
+<script>
+  // Live clock
+  function updateClock() {
+    const el = document.getElementById('menubar-clock');
+    const d = new Date();
+    el.textContent = d.toLocaleTimeString();
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // ---------- Dock magnify ----------
+  (function dockMagnify(){
+    const dock = document.getElementById('dock');
+    const icons = Array.from(dock.querySelectorAll('.dock-icon'));
+    dock.addEventListener('mousemove', e=>{
+      const rect = dock.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      icons.forEach(icon=>{
+        const icRect = icon.getBoundingClientRect();
+        const center = icRect.left + icRect.width/2 - rect.left;
+        const dist = Math.abs(center - mouseX);
+        const maxScale = 1.6;
+        const influence = Math.exp(-(dist*dist)/(2*120*120));
+        const scale = 1 + (maxScale - 1) * influence;
+        icon.style.transform = `translateY(${-8*influence}px) scale(${scale})`;
+        icon.style.zIndex = Math.round(influence * 1000);
+      });
+    });
+    dock.addEventListener('mouseleave', ()=>{
+      icons.forEach(icon=>{ icon.style.transform='none'; icon.style.zIndex=''; });
+    });
+    icons.forEach(ic=>{
+      ic.addEventListener('click', ()=>{ const link = ic.dataset.link; if(link) window.location.href = link; });
+    });
+  })();
+
+  // ---------- Spotlight search shortcuts ----------
+  (function spotlight(){
+    const input = document.getElementById('spot-input');
+    if(!input) return;
+    const quick = {
+      'ideas': 'ideas.html',
+      'programs': 'explore.html',
+      'gallery': 'gallery.html',
+      'about': 'about.html',
+      'inspire': 'inspiration.html',
+      'submit': 'ideas.html#submit'
+    };
+    document.addEventListener('keydown', (e)=>{
+      if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
+        e.preventDefault(); input.focus(); input.select();
+      }
+    });
+    const btn = document.getElementById('spot-search');
+    if(btn){
+      btn.addEventListener('click', ()=>{
+        const q = input.value.trim().toLowerCase();
+        if(!q){ input.animate([{transform:'scale(0.98)'},{transform:'scale(1)'}],{duration:220}); return; }
+        for(const k in quick){ if(q.includes(k)){ window.location.href = quick[k]; return; } }
+        window.location.href = 'ideas.html?q=' + encodeURIComponent(q);
+      });
+    }
+  })();
+
+  // ---------- CTA buttons micro-animations ----------
+  (function wireCTAs(){
+    function bounce(el){
+      el.animate([{ transform:'translateY(0px)'},{ transform:'translateY(-6px)'},{ transform:'translateY(0px)'}],{duration:420,easing:'cubic-bezier(.2,.9,.25,1)'});
+    }
+    ['cta-ideas','cta-programs','cta-inspire'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.addEventListener('click', ()=>bounce(el));
+      if(el) el.addEventListener('mouseover', ()=>el.style.boxShadow='0 20px 45px rgba(10,132,255,0.18)');
+      if(el) el.addEventListener('mouseout', ()=>el.style.boxShadow='');
+    });
+  })();
+
+  // ---------- Quick submit modal ----------
+  (function quickSubmit(){
+    const submitCard = document.getElementById('submit-idea-btn') || document.getElementById('card-submit');
+    if(!submitCard) return;
+    submitCard.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const overlay = document.createElement('div');
+      overlay.style.position='fixed'; overlay.style.inset=0; overlay.style.background='linear-gradient(180deg, rgba(2,6,23,0.8), rgba(2,6,23,0.9))';
+      overlay.style.display='flex'; overlay.style.alignItems='center'; overlay.style.justifyContent='center'; overlay.style.zIndex=1500;
+      overlay.innerHTML = `
+        <div style="width:840px;max-width:calc(100% - 40px);border-radius:16px;padding:26px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.02);box-shadow:0 40px 120px rgba(2,6,23,0.8);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <div><h2 style="margin:0;font-size:20px">Submit an idea</h2><div style="color:var(--muted);font-size:13px">Quick pitch — visible to teachers for review</div></div>
+            <div><button id="closeOverlay" class="btn">Close</button></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <input id="q_name" placeholder="Your name (optional)" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)">
+            <input id="q_title" placeholder="Idea title" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)">
+            <textarea id="q_desc" placeholder="Short pitch — problem + solution" style="grid-column:1 / -1;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text);min-height:120px"></textarea>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:14px">
+            <button id="q_cancel" class="btn">Cancel</button>
+            <button id="q_send" class="btn primary">Submit idea</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      overlay.querySelector('#closeOverlay').addEventListener('click', ()=>overlay.remove());
+      overlay.querySelector('#q_cancel').addEventListener('click', ()=>overlay.remove());
+      overlay.querySelector('#q_send').addEventListener('click', ()=>{
+        const title = document.getElementById('q_title').value.trim();
+        const desc = document.getElementById('q_desc').value.trim();
+        if(!title || !desc){ alert('Please provide a title and a short pitch.'); return; }
+        overlay.innerHTML = `<div style="padding:38px;text-align:center"><h2 style="margin-bottom:8px">Thanks! Idea submitted ✅</h2><div style="color:var(--muted)">Teachers will review it.</div></div>`;
+        setTimeout(()=> overlay.remove(),1200);
+      });
+    });
+  })();
+
+  // ---------- Accessibility for keyboard users ----------
+  (function focusable(){
+    document.querySelectorAll('.focusable').forEach(el=>{
+      el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') el.click(); });
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Inspiration · Kidpreneur</title>
+<style>
+  :root{
+    --bg-900:#0b0b0c;--bg-800:#0f1113;
+    --border:rgba(255,255,255,0.05);
+    --accent:#0a84ff;--accent2:#64d2ff;
+    --muted:#8e8e93;--text:#efeff4;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:-apple-system,"SF Pro Display","SF Pro Text";background:linear-gradient(180deg,var(--bg-900),var(--bg-800));color:var(--text);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  .menubar{position:fixed;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));border-bottom:1px solid var(--border);backdrop-filter:blur(14px) saturate(140%);z-index:1100}
+  .menubar .left{display:flex;align-items:center;gap:12px}
+  .logo{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-weight:700}
+  .brand .title{font-weight:700;font-size:14px}
+  .brand .sub{font-size:11px;color:var(--muted)}
+  .menubar .center{color:var(--muted);font-size:13px}
+  .menubar .right{color:var(--muted);font-size:13px}
+
+  .desktop{padding:64px 32px 120px;margin-top:44px;display:flex;justify-content:center}
+  .app{width:1000px;max-width:100%;border-radius:20px;background:linear-gradient(180deg,rgba(20,20,21,.7),rgba(12,12,13,.7));border:1px solid var(--border);backdrop-filter:blur(20px) saturate(160%);box-shadow:0 18px 48px rgba(2,6,23,.6);animation:fadeIn 600ms cubic-bezier(.2,.9,.25,1);overflow:hidden}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+  .titlebar{height:62px;display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid var(--border)}
+  .traffic{display:flex;gap:8px}
+  .t{width:13px;height:13px;border-radius:50%}
+  .red{background:#ff5f56}.yellow{background:#ffbd2e}.green{background:#28c840}
+  .win-title{flex:1;text-align:center;font-weight:600}
+
+  .insp-hero{padding:50px 40px;text-align:center}
+  .insp-hero h1{font-size:46px;margin:0;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientMove 6s ease infinite;background-size:200% auto}
+  .insp-hero p{margin-top:12px;font-size:18px;color:var(--muted)}
+  @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+  .inspiration-feed{display:flex;flex-direction:column;gap:32px;padding:0 40px 40px}
+  
+  .card{
+    padding:28px;
+    border-radius:var(--radius);
+    background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.05);
+    box-shadow:0 12px 30px rgba(2,6,23,.45);
+    opacity:0;
+    transform:translateY(20px) scale(.97);
+    transition:all .4s cubic-bezier(.2,.9,.25,1);
+    overflow:hidden;
+    cursor:pointer;
+  }
+  .card.show{opacity:1;transform:none}
+  .card h3{margin-top:0;margin-bottom:10px;font-size:22px;color:var(--accent)}
+  .card p{margin:0;font-size:15px;color:var(--text);line-height:1.6; max-height: 60px; overflow: hidden; transition: max-height .4s ease}
+  .card .extra{opacity:0; font-size:14px; color: var(--muted); margin-top:10px; transition: opacity .4s ease}
+
+  .card:hover{
+    transform:scale(1.05);
+    background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+  }
+  .card:hover p{max-height:200px;}
+  .card:hover .extra{opacity:1;}
+
+  .quote{font-size:20px;font-style:italic;color:var(--accent2)}
+
+  .app-footer{padding:16px 40px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+
+  .dock{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;padding:10px 18px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));border:1px solid var(--border);box-shadow:0 28px 80px rgba(2,6,23,.6);display:flex;gap:12px;z-index:1200;backdrop-filter:blur(20px)}
+  .dock .dock-icon{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;transition:transform 140ms cubic-bezier(.2,.9,.2,1)}
+  .dock .dock-icon img{width:40px;height:40px}
+</style>
+</head>
+<body>
+  <!-- Background music -->
+  <audio id="bgm" src="bgm.mp3" loop autoplay></audio>
+
+  <div class="menubar">
+    <div class="left"><div class="logo"><img src="doctoral-hat-8619555.svg"></div><div class="brand"><div class="title">CodeAGS</div><div class="sub">Kidpreneur</div></div></div>
+    <div class="center"></div>
+    <div class="right" id="menubar-clock">--:--:--</div>
+  </div>
+
+  <div class="desktop">
+    <div class="app">
+      <div class="titlebar">
+        <div class="traffic"><div class="t red"></div><div class="t yellow"></div><div class="t green"></div></div>
+        <div class="win-title"></div>
+      </div>
+
+      <div class="insp-hero">
+        <h1>Inspiration</h1>
+        <p>Stories, quotes, and sparks of creativity for Kidpreneur minds.</p>
+      </div>
+
+      <section class="inspiration-feed">
+        <!-- Existing cards -->
+        <div class="card">
+          <h3>Student Spotlight</h3>
+          <p>Meet Aditi, who turned her simple recycling project into a local movement. She proved that small steps lead to big changes.</p>
+          <div class="extra">Her project has now inspired an entire school to adopt sustainable practices, and she was recently awarded by the local council.</div>
+        </div>
+        <div class="card">
+          <h3>Quote of the Day</h3>
+          <p class="quote">“The people who are crazy enough to think they can change the world are the ones who do.”</p>
+          <div class="extra">Remember, bold thinking can spark real innovation. Share your ideas fearlessly!</div>
+        </div>
+        <div class="card">
+          <h3>Innovation Highlight</h3>
+          <p>Our Kidpreneur team recently showcased prototypes at the Young Innovators Fair — from eco-friendly packaging to AI-driven apps.</p>
+          <div class="extra">The projects focused on practical solutions that can scale in local markets, helping students learn business thinking early.</div>
+        </div>
+        <div class="card">
+          <h3>Global Inspiration</h3>
+          <p>Kids in Finland are learning to code by creating businesses around digital games. The future really has no borders.</p>
+          <div class="extra">Collaborating globally helps young minds understand diverse markets and adapt solutions creatively.</div>
+        </div>
+
+        <!-- New cards -->
+        <div class="card">
+          <h3>Startup Journey</h3>
+          <p>Rohan, age 14, launched his first app to teach kids chess online. What started as a hobby became a mini startup.</p>
+          <div class="extra">He now mentors younger students to develop coding and entrepreneurial skills, showing that age is no barrier.</div>
+        </div>
+        <div class="card">
+          <h3>Eco Innovator</h3>
+          <p>Priya designed biodegradable packaging from discarded rice husks, winning recognition at a regional innovation contest.</p>
+          <div class="extra">Her project is being adopted by local vendors, proving that creative solutions can have real-world impact.</div>
+        </div>
+        <div class="card">
+          <h3>Tech for Good</h3>
+          <p>Students in the Tech for Good program created a low-cost air quality monitor that helps communities track pollution.</p>
+          <div class="extra">This initiative teaches the power of technology to solve everyday problems while encouraging teamwork.</div>
+        </div>
+        <div class="card">
+          <h3>Leadership Spotlight</h3>
+          <p>Ayaan founded a peer-to-peer tutoring platform, helping hundreds of students excel academically during challenging times.</p>
+          <div class="extra">His leadership emphasizes empathy, collaboration, and the importance of giving back to the community.</div>
+        </div>
+        <div class="card">
+          <h3>Art & Creativity</h3>
+          <p>Team ColorSplash combined art and technology to create interactive murals that respond to sound and motion.</p>
+          <div class="extra">Their work has been displayed in local galleries, showing how creativity and coding can merge beautifully.</div>
+        </div>
+      </section>
+
+      <div class="app-footer">
+        <div>© 2025 CodeAGS · Kidpreneur</div>
+        <div><a href="index.html">Home</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dock" id="dock">
+    <div class="dock-icon" data-link="explore.html" title="Programs"><img src="conversation-8957426.svg"></div>
+    <div class="dock-icon" data-link="gallery.html" title="Gallery"><img src="book-9368637.svg"></div>
+    <div class="dock-icon" data-link="about.html" title="About"><img src="faq-8934796.svg"></div>
+    <div class="dock-icon" data-link="ideas.html"><img src="lightbulb-2223050.svg"></div>
+    <div class="dock-icon" data-link="index.html" title="Home"><img src="house-1110868.svg"></div>
+  </div>
+
+<script>
+  // Live clock
+  function updateClock() {
+    const el = document.getElementById('menubar-clock');
+    const d = new Date();
+    el.textContent = d.toLocaleTimeString();
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Dock magnify
+  (function dock(){
+    const dock=document.getElementById('dock');
+    const icons=[...dock.querySelectorAll('.dock-icon')];
+    dock.addEventListener('mousemove',e=>{
+      const rect=dock.getBoundingClientRect();
+      const x=e.clientX-rect.left;
+      icons.forEach(ic=>{
+        const icRect=ic.getBoundingClientRect();
+        const center=icRect.left+icRect.width/2-rect.left;
+        const dist=Math.abs(center-x);
+        const scale=1+0.6*Math.exp(-(dist*dist)/(2*120*120));
+        ic.style.transform=`translateY(${-6*Math.exp(-(dist*dist)/(2*120*120))}px) scale(${scale})`;
+      });
+    });
+    dock.addEventListener('mouseleave',()=>icons.forEach(ic=>ic.style.transform=''));
+    icons.forEach(ic=>ic.addEventListener('click',()=>window.location.href=ic.dataset.link));
+  })();
+
+  // Animate feed
+  document.querySelectorAll('.card').forEach((c,i)=>setTimeout(()=>c.classList.add('show'),200+i*200));
+
+  // Ensure BGM plays on user interaction
+  const bgm = document.getElementById('bgm');
+  document.body.addEventListener('click', ()=> { bgm.play(); }, {once:true});
+</script>
+</body>
+</html>
